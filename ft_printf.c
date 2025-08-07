@@ -12,28 +12,25 @@
 
 #include "ft_printf.h"
 
-static int	print_type(const char *input, void *arg)
+int	handle_input(char input, va_list args)
 {
-	int	i;
-
-	i = 0;
-	if (*input == 'c')
-		i += print_char((int)arg);
-	else if (*input == 's')
-		i += print_string((char *)arg);
-	else if (*input == 'p')
-		i += print_pointer((unsigned long)arg, 87);
-	else if (*input == 'd')
-		i += print_int((int)arg);
-	else if (*input == 'i')
-		i += print_int((int)arg);
-	else if (*input == 'u')
-		i += print_unsigned((unsigned int)arg);
-	else if (*input == 'x')
-		i += print_hex((unsigned int)arg, 87);
-	else if (*input == 'X')
-		i += print_hex((unsigned int)arg, 55);
-	return (i);
+	if (input == 'c')
+		return (ft_putchar(va_arg(args, int)));
+	else if (input == 's')
+		return (ft_putstr(va_arg(args, char *)));
+	else if (input == 'd' || input == 'i')
+		return (ft_putnbr(va_arg(args, int)));
+	else if (input == 'u')
+		return (ft_put_unsigned(va_arg(args, unsigned int)));
+	else if (input == 'x')
+		return (ft_puthex(va_arg(args, unsigned int), 0));
+	else if (input == 'X')
+		return (ft_puthex(va_arg(args, unsigned int), 1));
+	else if (input == 'p')
+		return (ft_putptr(va_arg(args, void *)));
+	else if (input == '%')
+		return (ft_putchar('%'));
+	return (0);
 }
 
 int	ft_printf(const char *input, ...)
@@ -48,7 +45,7 @@ int	ft_printf(const char *input, ...)
 	while (input[i])
 	{
 		if (input[i] == '%' && input[i + 1])
-			printed += print_type(input[++i], args);
+			printed += handle_input(input[++i], args);
 		else
 			printed += ft_putchar(input[i]);
 		i++;
@@ -56,3 +53,4 @@ int	ft_printf(const char *input, ...)
 	va_end(args);
 	return (printed);
 }
+
