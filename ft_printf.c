@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int	handle_input(char input, va_list args)
+int	handle_input(const char input, va_list args)
 {
 	if (input == 'c')
 		return (ft_putchar(va_arg(args, int)));
@@ -36,21 +36,30 @@ int	handle_input(char input, va_list args)
 int	ft_printf(const char *input, ...)
 {
 	va_list	args;
-	int		i;
 	int		printed;
+	int		ret;
 
-	i = 0;
 	printed = 0;
 	va_start(args, input);
-	while (input[i])
+	while (*input)
 	{
-		if (input[i] == '%' && input[i + 1])
-			printed += handle_input(input[++i], args);
+		if (*input == '%' && *(input + 1))
+		{
+			input++;
+			ret = handle_input(*input, args);
+		}
 		else
-			printed += ft_putchar(input[i]);
-		i++;
+			ret = ft_putchar(*input);
+		if (ret == -1)
+		{
+			va_end(args);
+			return (-1);
+		}
+		printed += ret;
+		input++;
 	}
 	va_end(args);
 	return (printed);
 }
+
 
