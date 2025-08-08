@@ -14,41 +14,61 @@
 
 int	ft_putnbr(int n)
 {
-	long	nb;
-	int		len = 0;
+	int	printed;
+	int	temp;
 
-	nb = n;
-	if (nb < 0)
+	printed = 0;
+	if (n == -2147483648)
+		return (ft_putstr("-2147483648"));
+	if (n < 0)
 	{
-		len += ft_putchar('-');
-		nb = -nb;
+		printed = ft_putchar('-');
+		if (printed == -1)
+			return (-1);
+		n = -n;
 	}
-	if (nb >= 10)
-		len += ft_putnbr(nb / 10);
-	len += ft_putchar((nb % 10) + '0');
-	return (len);
+	if (n >= 10)
+	{
+		temp = ft_putnbr(n / 10);
+		if (temp == -1)
+			return (-1);
+		printed += temp;
+	}
+	temp = ft_putchar(n % 10 + '0');
+	if (temp == -1)
+		return (-1);
+	printed += temp;
+	return (printed);
 }
 
 int	ft_putptr(void *ptr)
 {
-	unsigned long	addr;
-	int				len;
+	unsigned long	address;
+	int				printed;
 
 	if (!ptr)
-		return (write(1, "(nil)", 5));
-	addr = (unsigned long)ptr;
-	len = write(1, "0x", 2);
-	len += ft_putptr_hex(addr);
-	return (len);
+		return (ft_putstr("0x0"));
+	printed = ft_putstr("0x");
+	if (printed == -1)
+		return (-1);
+	address = (unsigned long)ptr;
+	return (printed + ft_putptr_hex(address));
 }
 
 int	ft_putptr_hex(unsigned long n)
 {
-	char	*base = "0123456789abcdef";
-	int		len = 0;
+	int		printed;
+	char	*base;
 
+	base = "0123456789abcdef";
 	if (n >= 16)
-		len += ft_putptr_hex(n / 16);
-	len += ft_putchar(base[n % 16]);
-	return (len);
+	{
+		printed = ft_putptr_hex(n / 16);
+		if (printed == -1)
+			return (-1);
+		n = n % 16;
+		return (printed + ft_putchar(base[n]));
+	}
+	return (ft_putchar(base[n]));
 }
+
