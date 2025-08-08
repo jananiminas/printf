@@ -14,39 +14,70 @@
 
 int	ft_putchar(char c)
 {
-	write(1, &c, 1);
+	if (write(1, &c, 1) == -1)
+		return (-1);
 	return (1);
 }
 
 int	ft_putstr(char *s)
 {
-	int i = 0;
+	int	len;
+	int	ret;
 
 	if (!s)
-		return (write(1, "(null)", 6));
-	while (s[i])
-		write(1, &s[i++], 1);
-	return (i);
+		return (ft_putstr("(null)"));
+	len = 0;
+	while (*s)
+	{
+		ret = ft_putchar(*s++);
+		if (ret == -1)
+			return (-1);
+		len += ret;
+	}
+	return (len);
 }
 
 int	ft_put_unsigned(unsigned int n)
 {
-	int	len = 0;
+	int	printed;
+	int	temp;
 
+	printed = 0;
 	if (n >= 10)
-		len += ft_put_unsigned(n / 10);
-	len += ft_putchar((n % 10) + '0');
-	return (len);
+	{
+		temp = ft_put_unsigned(n / 10);
+		if (temp == -1)
+			return (-1);
+		printed += temp;
+	}
+	temp = ft_putchar((n % 10) + '0');
+	if (temp == -1)
+		return (-1);
+	printed += temp;
+	return (printed);
 }
 
 int	ft_puthex(unsigned int n, int uppercase)
 {
 	char	*base;
-	int		len = 0;
+	int		len;
+	int		ret;
 
-	base = uppercase ? "0123456789ABCDEF" : "0123456789abcdef";
+	if (uppercase == 1)
+		base = "0123456789ABCDEF";
+	else
+		base = "0123456789abcdef";
+	len = 0;
 	if (n >= 16)
-		len += ft_puthex(n / 16, uppercase);
-	len += ft_putchar(base[n % 16]);
+	{
+		ret = ft_puthex(n / 16, uppercase);
+		if (ret == -1)
+			return (-1);
+		len += ret;
+	}
+	ret = ft_putchar(base[n % 16]);
+	if (ret == -1)
+		return (-1);
+	len += ret;
 	return (len);
 }
