@@ -18,7 +18,7 @@
 # include <unistd.h>
 
 int	ft_printf(const char *input, ...);
-int  handle_input(char input, va_list args);
+int  handle_input(const char input, va_list args);
 
 int	ft_putchar(char c);
 int	ft_putstr(char *s);
