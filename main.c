@@ -24,3 +24,14 @@ int main(void)
 	ft_printf("Percent sign: %%\n");
 	return 0;
 }
+
+// output
+
+// Char: J
+// String: Timeline
+// Decimal: -123
+// Unsigned: 123456789
+// Hex (lower): face
+// Hex (upper): FACE
+// Pointer: 0x1234abcd
+// Percent sign: %
