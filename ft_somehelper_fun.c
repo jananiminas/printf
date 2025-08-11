@@ -81,3 +81,4 @@ int	ft_puthex(unsigned int n, int uppercase)
 	len += ret;
 	return (len);
 }
+
