@@ -25,6 +25,9 @@ int main(void)
 	return 0;
 }
 
+// cc libftprintf.a
+// ./a.out
+
 // output
 
 // Char: J
