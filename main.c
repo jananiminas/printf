@@ -25,9 +25,15 @@ int main(void)
 	return 0;
 }
 
-// cc libftprintf.a
-// ./a.out
+#include <stdio.h>
 
+int  main()
+{
+	char *str = "0";  int cnt;
+	ft_printf("hello,%c am %s,the address of %p,unsigned %u, %d,%i,%x,%X 100%%\n",'I',"allu",str,123,4,6, 'a','M');
+	cnt= printf("hello,%c am %s,the address of %p,unsigned %u, %d,%i,%x,%X 100%%\n",'I',"allu",str,123,4,6, 'a','M');
+	printf("%d",cnt);
+}
 // output
 
 // Char: J
@@ -38,3 +44,7 @@ int main(void)
 // Hex (upper): FACE
 // Pointer: 0x1234abcd
 // Percent sign: %
+
+// hello,I am allu,the address of 0x1013b4f2e,unsigned 123, 4,6,61,4D 100%
+// hello,I am allu,the address of 0x1013b4f2e,unsigned 123, 4,6,61,4D 100%
+// 72%
