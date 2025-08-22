@@ -14,30 +14,29 @@
 
 int	ft_putnbr(int n)
 {
-	int	printed;
-	int	temp;
+	long	num;
+	int		printed;
+	int		temp;
 
 	printed = 0;
-	if (n == -2147483648)
-		return (ft_putstr("-2147483648"));
-	if (n < 0)
+	num = n;
+	if (num < 0)
 	{
 		printed = ft_putchar('-');
 		if (printed == -1)
 			return (-1);
-		n = -n;
+		num = -num;
 	}
-	if (n >= 10)
+	if (num >= 10)
 	{
-		temp = ft_putnbr(n / 10);
+		temp = ft_putnbr(num / 10);
 		if (temp == -1)
 			return (-1);
 		printed += temp;
 	}
-	temp = ft_putchar(n % 10 + '0');
+	temp = ft_putchar(num % 10 + '0');
 	if (temp == -1)
 		return (-1);
 	printed += temp;
 	return (printed);
 }
-
